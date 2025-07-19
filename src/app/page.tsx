@@ -1,9 +1,15 @@
-import { Button } from "@nextui-org/button";
+import React from "react";
+import SignButton from "@/components/sign-button";
+import { auth } from "@/auth";
+import SignOutButton from "@/components/signout-button";
 
-export default function Page() {
+export default async function Page() {
+  const session = await auth();
   return (
-    <div>
-      <Button>Click me</Button>
-    </div>
+    <>
+      <div>{session?.user ? JSON.stringify(session.user) : "未登录"}</div>
+      <SignButton />
+      <SignOutButton />
+    </>
   );
 }
