@@ -1,4 +1,16 @@
-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button} from "@nextui-org/react";
+import { auth, signIn, signOut } from "@/auth";
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  Button,
+  Input,
+  Avatar,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@nextui-org/react";
 
 export const AcmeLogo = () => {
   return (
@@ -13,40 +25,76 @@ export const AcmeLogo = () => {
   );
 };
 
-export default function Header() {
+export default async function Header() {
+  const session = await auth();
+  let authContent: React.ReactNode;
+  if (session?.user) {
+    authContent = (
+      <Popover placement="bottom">
+        <PopoverTrigger>
+          <Avatar
+            src={
+              session.user.image ||
+              "https://avatars.githubusercontent.com/u/207756783?v=4"
+            }
+          />
+        </PopoverTrigger>
+        <PopoverContent>
+          <form
+            className="p-4"
+            action={async () => {
+              "use server";
+              await signOut();
+            }}
+          >
+            <Button type="submit">退出</Button>
+          </form>
+        </PopoverContent>
+      </Popover>
+    );
+  } else {
+    authContent = (
+      <>
+        <NavbarItem className="hidden lg:flex">
+          <form
+            action={async () => {
+              "use server";
+              await signIn("github");
+            }}
+          >
+            <Button type="submit" color="secondary" href="#" variant="bordered">
+              Sign In
+            </Button>
+          </form>
+        </NavbarItem>
+        <NavbarItem>
+          <form
+            action={async () => {
+              "use server";
+              await signIn("github");
+            }}
+          >
+            <Button type="submit" color="secondary" href="#">
+              Sign Up
+            </Button>
+          </form>
+        </NavbarItem>
+      </>
+    );
+  }
+
   return (
-    <Navbar>
+    <Navbar className="border-b-1 border-gray-200">
       <NavbarBrand>
         <AcmeLogo />
-        <p className="font-bold text-inherit">ACME</p>
+        <p className="font-bold text-inherit">DISCUSS</p>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
-          <Link color="foreground" href="#">
-            Features
-          </Link>
-        </NavbarItem>
-        <NavbarItem isActive>
-          <Link aria-current="page" href="#">
-            Customers
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Integrations
-          </Link>
+          <Input />
         </NavbarItem>
       </NavbarContent>
-      <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
-            Sign Up
-          </Button>
-        </NavbarItem>
-      </NavbarContent>
+      <NavbarContent justify="end">{authContent}</NavbarContent>
     </Navbar>
   );
 }
