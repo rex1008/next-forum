@@ -1,4 +1,4 @@
-import { auth, signIn, signOut } from "@/auth";
+import { auth } from "@/auth";
 import {
   Navbar,
   NavbarBrand,
@@ -11,6 +11,8 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@nextui-org/react";
+
+import * as actions from '@/actions'
 
 export const AcmeLogo = () => {
   return (
@@ -42,10 +44,7 @@ export default async function Header() {
         <PopoverContent>
           <form
             className="p-4"
-            action={async () => {
-              "use server";
-              await signOut();
-            }}
+            action={actions.signOut}
           >
             <Button type="submit">退出</Button>
           </form>
@@ -57,10 +56,7 @@ export default async function Header() {
       <>
         <NavbarItem className="hidden lg:flex">
           <form
-            action={async () => {
-              "use server";
-              await signIn("github");
-            }}
+            action={actions.signIn}
           >
             <Button type="submit" color="secondary" href="#" variant="bordered">
               Sign In
@@ -69,10 +65,7 @@ export default async function Header() {
         </NavbarItem>
         <NavbarItem>
           <form
-            action={async () => {
-              "use server";
-              await signIn("github");
-            }}
+            action={actions.signIn}
           >
             <Button type="submit" color="secondary" href="#">
               Sign Up
