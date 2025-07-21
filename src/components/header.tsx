@@ -1,18 +1,12 @@
-import { auth } from "@/auth";
 import {
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Button,
   Input,
-  Avatar,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
 } from "@nextui-org/react";
 
-import * as actions from '@/actions'
+import HeaderAuth from "./header-auth";
 
 export const AcmeLogo = () => {
   return (
@@ -28,54 +22,6 @@ export const AcmeLogo = () => {
 };
 
 export default async function Header() {
-  const session = await auth();
-  let authContent: React.ReactNode;
-  if (session?.user) {
-    authContent = (
-      <Popover placement="bottom">
-        <PopoverTrigger>
-          <Avatar
-            src={
-              session.user.image ||
-              "https://avatars.githubusercontent.com/u/207756783?v=4"
-            }
-          />
-        </PopoverTrigger>
-        <PopoverContent>
-          <form
-            className="p-4"
-            action={actions.signOut}
-          >
-            <Button type="submit">退出</Button>
-          </form>
-        </PopoverContent>
-      </Popover>
-    );
-  } else {
-    authContent = (
-      <>
-        <NavbarItem className="hidden lg:flex">
-          <form
-            action={actions.signIn}
-          >
-            <Button type="submit" color="secondary" href="#" variant="bordered">
-              Sign In
-            </Button>
-          </form>
-        </NavbarItem>
-        <NavbarItem>
-          <form
-            action={actions.signIn}
-          >
-            <Button type="submit" color="secondary" href="#">
-              Sign Up
-            </Button>
-          </form>
-        </NavbarItem>
-      </>
-    );
-  }
-
   return (
     <Navbar className="border-b-1 border-gray-200">
       <NavbarBrand>
@@ -87,7 +33,9 @@ export default async function Header() {
           <Input />
         </NavbarItem>
       </NavbarContent>
-      <NavbarContent justify="end">{authContent}</NavbarContent>
+      <NavbarContent justify="end">
+        <HeaderAuth/>
+      </NavbarContent>
     </Navbar>
   );
 }
