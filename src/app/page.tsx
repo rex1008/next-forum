@@ -1,5 +1,5 @@
-import TopicCreateForm from '@/components/topic-create-form'
-import TopicList from '@/components/topic-list'
+import TopicCreateForm from '@/components/posts/topic-create-form'
+import TopicList from '@/components/topics/topic-list'
 import React from 'react'
 
 export default function Page() {

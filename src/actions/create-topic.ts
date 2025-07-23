@@ -53,7 +53,7 @@ export async function createTopic(prevState: CreateTopicFormState, formData: For
       data: {
         name: result.data.name,
         description: result.data.description,
-        userId: session.user.id
+        userId: session.user.id!
       }
     })
   } catch (error: unknown) {

@@ -1,5 +1,5 @@
-import { prisma } from "@/prisma";
-import { Chip } from "@nextui-org/react";
+import { fetchTopics } from "@/prisma/queries/topic";
+import { Badge, Chip } from "@nextui-org/react";
 import Link from "next/link";
 import React from "react";
 
@@ -12,14 +12,16 @@ export const ListBoxWrapper = ({ children }: { children: React.ReactNode }) => {
 };
 
 export default async function TopicList() {
-  const topics = await prisma.topic.findMany();
+  const topics = await fetchTopics()
   return (
     <ListBoxWrapper>
       {topics.map((topic) => {
         return (
-          <Chip key={topic.id} variant="shadow" color="default">
-            <Link href={`/topics/${topic.name}`}>{topic.name}</Link>
-          </Chip>
+          <Badge key={topic.id} color="secondary" content={topic._count.posts} shape="circle" size="sm">
+            <Chip variant="shadow" color="default">
+              <Link href={`/topics/${topic.name}`}>{topic.name}</Link>
+            </Chip>
+          </Badge>
         );
       })}
     </ListBoxWrapper>

@@ -1,3 +1,4 @@
+import PostCreateForm from "@/components/posts/post-create-form";
 import React from "react";
 
 export default async function TopicShowPage({
@@ -7,5 +8,14 @@ export default async function TopicShowPage({
 }) {
   const name = (await params).name;
 
-  return <div>话题{name}的列表</div>;
+  return (
+    <div className="flex justify-between">
+      <div>
+        <h1 className="text-xl mt-2">{name}</h1>
+      </div>
+      <div>
+        <PostCreateForm/>
+      </div>
+    </div>
+  );
 }
