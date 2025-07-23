@@ -13,14 +13,14 @@ import React, { useActionState } from "react";
 import * as actions from "@/actions";
 
 export default function TopicCreateForm() {
-  const [state, formAction] = useActionState(actions.createTopic, {
+  const [state, formAction, isPending] = useActionState(actions.createTopic, {
     errors: {},
   });
 
   return (
     <Popover placement="left">
       <PopoverTrigger>
-        <Button color="secondary" variant="bordered">
+        <Button color="secondary" variant="bordered" className="block ml-auto">
           Create a Topic
         </Button>
       </PopoverTrigger>
@@ -49,7 +49,7 @@ export default function TopicCreateForm() {
                 {state.errors._form.join(", ")}
               </Chip>
             ) : null}
-            <Button type="submit">Submit</Button>
+            <Button isLoading={isPending} type="submit">Submit</Button>
           </div>
         </form>
       </PopoverContent>

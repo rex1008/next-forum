@@ -1,6 +1,9 @@
 "use server"
 
 import { auth } from '@/auth'
+import { prisma } from '@/prisma'
+import type { Topic } from '@prisma/client'
+import { redirect } from 'next/navigation'
 import { z } from 'zod'
 
 interface CreateTopicFormState {
@@ -42,7 +45,36 @@ export async function createTopic(prevState: CreateTopicFormState, formData: For
     
   }
 
-  return {
-    errors: {}
+  console.log("user id in session", session.user.id)
+
+  let topic: Topic
+  try {
+    topic = await prisma.topic.create({
+      data: {
+        name: result.data.name,
+        description: result.data.description,
+        userId: session.user.id
+      }
+    })
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return {
+        errors: {
+          _form: [error.message]
+        }
+      } 
+    } else {
+      return {
+        errors: {
+          _form: ["Something went wrong."]
+        }
+      }
+    }
   }
+
+  redirect(`/topics/${topic.name}`)
+
+  // return {
+  //   errors: {}
+  // }
 }
