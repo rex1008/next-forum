@@ -1,4 +1,4 @@
-import TopicCreateForm from '@/components/posts/topic-create-form'
+import TopicCreateForm from '@/components/topics/topic-create-form'
 import TopicList from '@/components/topics/topic-list'
 import React from 'react'
 
