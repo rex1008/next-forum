@@ -13,13 +13,16 @@ import { useActionState } from "react";
 import * as actions from "@/actions";
 
 interface PostCreateFormProps {
-  name: string
+  name: string;
 }
 
 export default function PostCreateForm({ name }: PostCreateFormProps) {
-  const [state, formAction, isPending] = useActionState(actions.createPost.bind(null, name), {
-    errors: {},
-  });
+  const [state, formAction, isPending] = useActionState(
+    actions.createPost.bind(null, name),
+    {
+      errors: {},
+    }
+  );
 
   return (
     <Popover placement="left">
@@ -53,7 +56,9 @@ export default function PostCreateForm({ name }: PostCreateFormProps) {
                 {state.errors._form.join(", ")}
               </Chip>
             ) : null}
-            <Button isLoading={isPending} type="submit">Submit</Button>
+            <Button isLoading={isPending} type="submit">
+              Submit
+            </Button>
           </div>
         </form>
       </PopoverContent>
