@@ -1,18 +1,19 @@
-import React from 'react'
+import PostShow from "@/components/posts/post-show";
+import PostShowLoading from "@/components/posts/post-show-loading";
+import React, { Suspense } from "react";
 
 interface PostShowPageProps {
   params: {
-    name: string,
-    postId: string
-  }
+    name: string;
+    postId: string;
+  };
 }
 
 export default async function PostShowPage({ params }: PostShowPageProps) {
-  const { name, postId } = await params
+  const { postId } = await params;
   return (
-    <div>
-      <p>{name}</p>
-      <p>{postId}</p>
-    </div>
-  )
+    <Suspense fallback={<PostShowLoading />}>
+      <PostShow postId={postId} />
+    </Suspense>
+  );
 }

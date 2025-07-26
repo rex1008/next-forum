@@ -7,6 +7,7 @@ import {
 } from "@nextui-org/react";
 
 import HeaderAuth from "./header-auth";
+import Link from "next/link";
 
 export const AcmeLogo = () => {
   return (
@@ -25,8 +26,10 @@ export default async function Header() {
   return (
     <Navbar className="border-b-1 border-gray-200">
       <NavbarBrand>
-        <AcmeLogo />
-        <p className="font-bold text-inherit">DISCUSS</p>
+        <Link href="/" className="flex items-center ml-[-10px]">
+          <AcmeLogo />
+          <p className="font-bold text-inherit">DISCUSS</p>
+        </Link>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
