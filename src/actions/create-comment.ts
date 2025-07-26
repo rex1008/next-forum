@@ -2,6 +2,7 @@
 
 import { auth } from "@/auth";
 import { prisma } from "@/prisma";
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 interface CreateCommentFormState {
@@ -9,6 +10,7 @@ interface CreateCommentFormState {
     content?: string[];
     _form?: string[];
   };
+  success?: boolean;
 }
 
 const createCommentSchema = z.object({
@@ -16,10 +18,17 @@ const createCommentSchema = z.object({
 });
 
 export async function createComment(
-  { postId }: { postId: string },
+  { postId }: { postId: string | null },
   prevState: CreateCommentFormState,
   formData: FormData
 ): Promise<CreateCommentFormState> {
+  if (!postId) {
+    return {
+      errors: {
+        _form: ["Cannot get post id."],
+      },
+    };
+  }
   const content = formData.get("content");
 
   const result = createCommentSchema.safeParse({
@@ -45,7 +54,7 @@ export async function createComment(
       data: {
         content: result.data.content,
         userId: session.user.id!,
-        postId
+        postId,
       },
     });
   } catch (error: unknown) {
@@ -64,7 +73,26 @@ export async function createComment(
     }
   }
 
-  return {
-    errors: {}
+  const topic = await prisma.topic.findFirst({
+    where: {
+      posts: {
+        some: {
+          id: postId,
+        },
+      },
+    },
+  });
+  if (!topic) {
+    return {
+      errors: {
+        _form: ["Failed to revalidate post"],
+      },
+    };
   }
+  revalidatePath(`/topics/${topic.name}/posts/${postId}`);
+
+  return {
+    errors: {},
+    success: true
+  };
 }
