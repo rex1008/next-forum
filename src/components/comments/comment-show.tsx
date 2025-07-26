@@ -1,10 +1,18 @@
-import { CommentWithUser } from "@/prisma/queries/comments";
+import {
+  CommentWithUser,
+  fetchCommentsByPostId,
+} from "@/prisma/queries/comments";
 import dayjs from "dayjs";
 import Image from "next/image";
 import React from "react";
 import CommentCreateForm from "./comment-create-form";
 
-export default function CommentShow({ comment }: { comment: CommentWithUser }) {
+export default async function CommentShow({
+  comment,
+}: {
+  comment: CommentWithUser;
+}) {
+  const comments = await fetchCommentsByPostId(comment.postId);
   return (
     <div className="border mt-2 p-4 rounded">
       <div className="flex gap-3">
@@ -26,8 +34,19 @@ export default function CommentShow({ comment }: { comment: CommentWithUser }) {
             </span>
           </p>
 
-          <CommentCreateForm postId={comment.postId} isOpen={false} />
+          <CommentCreateForm
+            postId={comment.postId}
+            isOpen={false}
+            parentId={comment.id}
+          />
         </div>
+      </div>
+      <div className="pl-12">
+        {comments
+          .filter((c) => c.parentId === comment.id)
+          .map((c) => {
+            return <CommentShow key={c.id} comment={c} />;
+          })}
       </div>
     </div>
   );

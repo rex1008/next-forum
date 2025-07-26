@@ -9,7 +9,7 @@ export type CommentWithUser = {
 } & Comment;
 
 export function fetchCommentsByPostId(
-  postId: string
+  postId: string | null
 ): Promise<CommentWithUser[]> {
   return prisma.comment.findMany({
     where: {

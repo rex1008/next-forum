@@ -3,19 +3,18 @@ import CommentShow from "./comment-show";
 import { fetchCommentsByPostId } from "@/prisma/queries/comments";
 
 interface CommentListProps {
-  postId: string
+  postId: string;
 }
 
 export default async function CommentList({ postId }: CommentListProps) {
-  const comments = await fetchCommentsByPostId(postId)
+  const comments = await fetchCommentsByPostId(postId);
+  const topLevelComments = comments.filter(comment => comment.parentId === null)
   return (
     <div className="space-y-3">
       <h1 className="text-lg font-bold">All 20 comments</h1>
-      {
-        comments.map(comment => {
-          return <CommentShow key={comment.id} comment={comment} />
-        })
-      }
+      {topLevelComments.map((comment) => {
+        return <CommentShow key={comment.id} comment={comment} />;
+      })}
     </div>
   );
 }

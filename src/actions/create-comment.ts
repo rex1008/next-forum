@@ -14,11 +14,11 @@ interface CreateCommentFormState {
 }
 
 const createCommentSchema = z.object({
-  content: z.string().min(10).max(4747),
+  content: z.string().min(3).max(4747),
 });
 
 export async function createComment(
-  { postId }: { postId: string | null },
+  { postId, parentId }: { postId: string | null, parentId?: string },
   prevState: CreateCommentFormState,
   formData: FormData
 ): Promise<CreateCommentFormState> {
@@ -55,6 +55,7 @@ export async function createComment(
         content: result.data.content,
         userId: session.user.id!,
         postId,
+        parentId
       },
     });
   } catch (error: unknown) {
