@@ -71,3 +71,40 @@ export function fetchTopPosts(): Promise<PostWithData[]> {
     }
   })
 }
+
+export function fetchPostByPnameorcon(pnameorcon: string) {
+  return prisma.post.findMany({
+    where: {
+      OR: [
+        {
+          content: {
+            contains: pnameorcon
+          }
+        },
+        {
+          title: {
+            contains: pnameorcon
+          }
+        }
+      ]
+    },
+    include: {
+      topic: {
+        select: {
+          name: true
+        }
+      },
+      user: {
+        select: {
+          name: true,
+          image: true
+        }
+      },
+      _count: {
+        select: {
+          comments: true
+        }
+      }
+    }
+  })
+}

@@ -1,18 +1,17 @@
-import { redirect } from 'next/navigation'
-import React from 'react'
+import PostList from "@/components/posts/post-list";
+import { fetchPostByPnameorcon } from "@/prisma/queries/posts";
+import { redirect } from "next/navigation";
+import React from "react";
 
 interface SearchPageProps {
-  searchParams: Promise<{ pnameorcon: string }>
+  searchParams: Promise<{ pnameorcon: string }>;
 }
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
-  const { pnameorcon } = await searchParams
+  const { pnameorcon } = await searchParams;
   if (!pnameorcon) {
-    redirect("/")
+    redirect("/");
   }
-  return (
-    <div>
-      {pnameorcon}
-    </div>
-  )
+  const posts = await fetchPostByPnameorcon(pnameorcon);
+  return <PostList posts={posts} />;
 }
