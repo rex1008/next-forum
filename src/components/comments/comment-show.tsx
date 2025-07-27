@@ -14,7 +14,7 @@ export default async function CommentShow({
 }) {
   const comments = await fetchCommentsByPostId(comment.postId);
   return (
-    <div className="border mt-2 p-4 rounded">
+    <div className="border mt-2 p-4 rounded dark:border-purple-600">
       <div className="flex gap-3">
         <Image
           src={comment.user?.image || "/avatar.png"}

@@ -23,7 +23,7 @@ const ThemeSwitch = () => {
         setTheme(theme === "light" ? "dark" : "light");
       }}
     >
-      {theme === "light" ? <Moon size={15} /> : <SunMoon size={15} />}
+      {theme === "light" ? <Moon size={20} /> : <SunMoon size={20} />}
     </div>
   );
 };

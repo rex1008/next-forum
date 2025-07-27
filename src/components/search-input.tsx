@@ -20,6 +20,9 @@ export default function SsearchInput() {
           onChange={(e) => {
             setSearchKey(e.target.value)
           }}
+          onClear={() => {
+            setSearchKey("")
+          }}
           name="pnameorcon"
           isClearable
           classNames={{

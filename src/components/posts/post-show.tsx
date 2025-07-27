@@ -16,9 +16,9 @@ export default async function PostShow({ postId }: PostShowProps) {
     notFound()
   }
   return (
-    <div>
+    <>
       <h1 className='text-2xl font-bold my-2'>{post.title}</h1>
-      <p className='p-4 border rounded'>{post.content}</p>
-    </div>
+      <p className='p-4 border rounded dark:border-purple-600'>{post.content}</p>
+    </>
   )
 }

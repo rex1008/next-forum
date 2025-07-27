@@ -10,8 +10,8 @@ export default async function CommentList({ postId }: CommentListProps) {
   const comments = await fetchCommentsByPostId(postId);
   const topLevelComments = comments.filter(comment => comment.parentId === null)
   return (
-    <div className="space-y-3">
-      <h1 className="text-lg font-bold">All 20 comments</h1>
+    <div className="space-y-3 pb-12 !mt-8">
+      <h1 className="text-lg font-bold">All {comments.length} comments</h1>
       {topLevelComments.map((comment) => {
         return <CommentShow key={comment.id} comment={comment} />;
       })}

@@ -5,7 +5,7 @@ import React from "react";
 
 export const ListBoxWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex max-w-[260px] p-3 rounded-small border-2 mt-4 gap-3">
+    <div className="flex max-w-[260px] p-3 rounded-small border-2 mt-4 gap-3 dark:border-purple-600">
       {children}
     </div>
   );

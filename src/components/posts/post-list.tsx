@@ -11,7 +11,7 @@ export default function PostList({ posts }: { posts: PostWithData[] }) {
     <Listbox
       aria-label="Post List"
       itemClasses={{
-        base: "border-small border-default-200 mt-4",
+        base: "border-small border-default-200 mt-4 dark:border-purple-600",
       }}
     >
       {posts.map((post) => {

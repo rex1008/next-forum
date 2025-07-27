@@ -25,7 +25,7 @@ export const AcmeLogo = () => {
 
 export default async function Header() {
   return (
-    <Navbar className="border-b-1 border-gray-200">
+    <Navbar className="shadow-md dark:shadow-purple-800">
       <NavbarBrand>
         <Link href="/" className="flex items-center ml-[-10px]">
           <AcmeLogo />

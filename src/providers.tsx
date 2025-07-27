@@ -8,7 +8,7 @@ import { ThemeProvider } from "next-themes";
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <SessionProvider>
-      <ThemeProvider enableColorScheme={false}>
+      <ThemeProvider enableColorScheme={false} attribute="class">
         <NextUIProvider>{children}</NextUIProvider>
       </ThemeProvider>
     </SessionProvider>
