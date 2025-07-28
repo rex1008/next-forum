@@ -9,6 +9,7 @@ import HeaderAuth from "./header-auth";
 import Link from "next/link";
 import SsearchInput from "./search-input";
 import ThemeSwitch from "./theme-switcher";
+import { Suspense } from "react";
 
 export const AcmeLogo = () => {
   return (
@@ -34,11 +35,13 @@ export default async function Header() {
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
-          <SsearchInput/>
+          <Suspense>
+            <SsearchInput />
+          </Suspense>
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
-        <ThemeSwitch/>
+        <ThemeSwitch />
         <HeaderAuth />
       </NavbarContent>
     </Navbar>

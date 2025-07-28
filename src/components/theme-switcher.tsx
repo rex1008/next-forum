@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
@@ -22,6 +22,7 @@ const ThemeSwitch = () => {
       onClick={() => {
         setTheme(theme === "light" ? "dark" : "light");
       }}
+      className="w-8 h-8 flex justify-center items-center rounded-lg bg-default-100 hover:bg-default-200 cursor-pointer"
     >
       {theme === "light" ? <Moon size={20} /> : <SunMoon size={20} />}
     </div>
